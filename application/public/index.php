@@ -8,6 +8,7 @@ require_once '../vendor/autoload.php';
 $app = new Silex\Application();
 
 $app['debug'] = true;
+$app['database'] = new PDO('127.0.0.1', 'root', '');
 
 $app->get('/', function() use($app) {
     return 'Hello Igor! Your Silex application is up and running. Woot!';
