@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: igor
- * Date: 29/06/15
- * Time: 16:19
- */
 
 namespace Screecher\Controller;
 
@@ -17,14 +11,28 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
+/**
+ * Class IndexController
+ * @package Screecher\Controller
+ */
 class IndexController
 {
+    /**
+     * @param Request $request
+     * @param Application $app
+     * @return mixed
+     */
     public function indexAction(Request $request, Application $app)
     {
         $apiCollection = $app['repository.api']->findAll();
         return $app['twig']->render('index.html.twig', ['apis' => $apiCollection]);
     }
 
+    /**
+     * @param Request $request
+     * @param Application $app
+     * @return mixed
+     */
     public function addMaintainerAction(Request $request, Application $app)
     {
         $maintainer = new Maintainer();
@@ -56,7 +64,6 @@ class IndexController
                 return $app->handle($subRequest, HttpKernelInterface::SUB_REQUEST, false);
             }
         }
-
 
         $data = array(
             'form' => $form->createView(),

@@ -15,33 +15,19 @@ class MaintainerRepository
      */
     protected $db;
 
-    /**
-     * @var \Screecher\Repository\ApiRepository
-     */
-    //protected $apiRepository;
-
     public function __construct(Connection $db)
     {
         $this->db = $db;
-
-        //$this->apiRepository = $apiRepository;
     }
-
 
     /**
      * Saves a maintainer to the database.
      *
-     * @param \Screecher\Entity\Maintainer $maintainer
-     * @return Maintainer
+     * @param array $maintainerData
+     * @return array
      */
     public function save($maintainerData)
     {
-//        $maintainerData = array(
-//            'email' => $maintainer->getEmail(),
-//            'api_id' => $maintainer->getApi(),
-//
-//        );
-
         $this->db->insert('maintainers', $maintainerData);
 
         $id = $this->db->lastInsertId();
