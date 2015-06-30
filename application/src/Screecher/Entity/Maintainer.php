@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: igor
- * Date: 29/06/15
- * Time: 14:27
- */
 
 namespace Screecher\Entity;
 
