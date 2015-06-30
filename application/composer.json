@@ -2,12 +2,29 @@
   "name": "pedromcn/screecher",
   "description": "Screecher: an application designed to scream at you when something goes terribly, terribly wrong",
   "license": "proprietary",
+
   "require": {
-    "silex/silex": "~1.2"
+    "silex/silex": "~1.2",
+    "doctrine/dbal": "~2.3",
+    "twig/twig": "1.*",
+    "symfony/config": "~2.3",
+    "symfony/form": "~2.3",
+    "symfony/locale": "~2.3",
+    "symfony/twig-bridge": "~2.3",
+    "symfony/validator": "~2.3",
+    "symfony/console": "~2.3",
+    "symfony/security": "~2.3",
+    "mandrill/mandrill": "1.0.*"
   },
+  "require-dev": {
+    "symfony/browser-kit"   : "~2.3",
+    "symfony/css-selector"  : "~2.3",
+    "symfony/dom-crawler"   : "~2.3"
+  },
+
   "autoload": {
     "psr-4": {
-      "Screecher\\": "src/"
+      "Screecher\\": "src/Screecher"
     }
   }
 }

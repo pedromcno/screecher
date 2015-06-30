@@ -1,0 +1,18 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    <h2>Screecher Report</h2>
+    {% for api, error in errors %}
+            For <b>{{ api }}</b> {{ error|length }} errors found. <br />
+    {% endfor %}
+
+    <p>Email report statuses</p>
+        {% for api, responseData in emailProviderResponse %}
+        <b>{{ api }}</b>
+        {% for maintainerReport in responseData %}
+        <ul>
+            <li>{{ maintainerReport.email }} | status: {{ maintainerReport.status }} | _id: {{ maintainerReport._id }}</li>
+        </ul>
+        {% endfor %}
+        {% endfor %}
+{% endblock %}
