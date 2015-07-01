@@ -25,3 +25,5 @@ $app['db.options'] = array(
     'user'     => 'root',
     'password' => '',
 );
+
+$app['api_log.path'] = __DIR__. '/../../api_usage.log';

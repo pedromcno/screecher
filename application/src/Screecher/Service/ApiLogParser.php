@@ -2,6 +2,7 @@
 
 namespace Screecher\Service;
 
+use Screecher\Exception\ApiLogWrongPathException;
 use Screecher\Service\Interfaces\LogParserInterface;
 
 /**
@@ -12,8 +13,6 @@ class ApiLogParser implements LogParserInterface
 {
     const API_LOG_ERROR = 'error';
 
-    const API_LOG_FILENAME = 'api_usage.log';
-
     const API_LOG_STATUS_INDEX = '3';
 
     const API_LOG_API_INDEX = '2';
@@ -21,11 +20,29 @@ class ApiLogParser implements LogParserInterface
     const API_LOG_MESSAGE_INDEX = '4';
 
     /**
+     * @var string
+     */
+    private $apiLogPath;
+
+    /**
+     * @param string $apiLogPath
+     */
+    public function __construct($apiLogPath)
+    {
+        $this->apiLogPath = $apiLogPath;
+    }
+
+    /**
      * @return array
+     * @throws ApiLogWrongPathException
      */
     public function parse()
     {
-        $csv = array_map('str_getcsv', file(__DIR__. '/../../../'. self::API_LOG_FILENAME));
+        if (!file_exists($this->apiLogPath)) {
+            throw new ApiLogWrongPathException('Wrong api_usage log path');
+        }
+
+        $csv = array_map('str_getcsv', file($this->apiLogPath));
 
         if (!empty($csv)) {
             return $this->findErrors($csv);

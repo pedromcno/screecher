@@ -1,17 +1,27 @@
 <?php
 
-use Symfony\Component\HttpFoundation\Request;
+require_once __DIR__ . '/../vendor/autoload.php';
+
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
+$app = new Silex\Application();
+
+require __DIR__.'/routes.php';
+
+if (isset($app_env) && in_array($app_env, array('prod','dev','test'))) {
+    $app['env'] = $app_env;
+} else {
+    $app['env'] = 'prod';
+}
+
+require __DIR__.'/../app/config/' . $app['env'] . '.php';
+
 // Register service providers.
 $app->register(new Silex\Provider\DoctrineServiceProvider());
 $app->register(new Silex\Provider\FormServiceProvider());
 $app->register(new Silex\Provider\SessionServiceProvider());
 $app->register(new Silex\Provider\ValidatorServiceProvider());
 $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
-$app->register(new Silex\Provider\TranslationServiceProvider());
-$app->register(new Silex\Provider\SwiftmailerServiceProvider());
-
 
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.options' => array(
@@ -32,7 +42,7 @@ $app['repository.maintainer'] = $app->share(function ($app) {
 
 // Register custom services.
 $app['parser.api_log'] = $app->share(function ($app) {
-    return new Screecher\Service\ApiLogParser();
+    return new Screecher\Service\ApiLogParser($app['api_log.path']);
 });
 
 $app['processor.errors'] = $app->share(function ($app) {
