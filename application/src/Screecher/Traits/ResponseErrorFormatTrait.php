@@ -1,11 +1,10 @@
 <?php
 
-namespace Screecher\Controller;
-
+namespace Screecher\Traits;
 
 /**
- * Class ResponseErrorFormatTrait
- * @package Screecher\Controller
+ * trait ResponseErrorFormatTrait
+ * @package Screecher\Traits
  */
 trait ResponseErrorFormatTrait
 {

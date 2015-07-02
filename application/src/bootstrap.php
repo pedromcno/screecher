@@ -8,6 +8,8 @@ $app = new Silex\Application();
 
 require __DIR__.'/routes.php';
 
+//$app_env = 'dev';
+
 if (isset($app_env) && in_array($app_env, array('prod','dev','test'))) {
     $app['env'] = $app_env;
 } else {
@@ -30,11 +32,12 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.form.templates' => array('form_div_layout.html.twig', 'common/form_div_layout.html.twig'),
     'twig.path' => array(__DIR__ . '/../app/views')
 ));
-
 $app->register(new Silex\Provider\TranslationServiceProvider(), array(
     'translator.messages' => array(),
 ));
-
+$app->register(new Silex\Provider\MonologServiceProvider(), array(
+    'monolog.logfile' => __DIR__.'/../'. $app['env'] .'.log',
+));
 
 // Register repositories.
 $app['repository.api'] = $app->share(function ($app) {
@@ -57,12 +60,12 @@ $app['processor.errors'] = $app->share(function ($app) {
    );
 });
 
-$app['email.builder'] = $app->share(function ($app) {
+$app['email.builder'] = $app->share(function () {
    return new Screecher\Service\ErrorsTemplateBuilder();
 });
 
 $app['mandrill.adapter'] = $app->share(function ($app) {
-    return new Screecher\Service\MandrillAdapter($app['mandrill.settings']);
+    return new Screecher\Service\MandrillAdapter($app['mandrill.settings'], $app['monolog']);
 });
 
 $app['template_builder.errors_template'] = $app->share(function ($app) {
@@ -80,6 +83,7 @@ $app->error(function (\Exception $e, $code) use ($app) {
             break;
         default:
             $message = 'We are sorry, but something went terribly wrong.';
+            $app['monolog']->addDebug($e->getMessage());
     }
     return new Response($message, $code);
 });

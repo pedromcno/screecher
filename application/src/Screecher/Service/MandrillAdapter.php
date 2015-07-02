@@ -1,8 +1,10 @@
 <?php
+
 namespace Screecher\Service;
 
 use Mandrill;
 use Screecher\Service\Interfaces\EmailProviderInterface;
+use Monolog\Logger;
 
 /**
  * Class MandrillAdapter
@@ -20,8 +22,12 @@ class MandrillAdapter implements EmailProviderInterface
 
     private $settings;
 
-    public function __construct($settings){
+    /** @var  Logger */
+    private $monologLogger;
+
+    public function __construct($settings, $monologLogger){
         $this->settings = $settings;
+        $this->monologLogger = $monologLogger;
     }
 
     /**
@@ -29,7 +35,7 @@ class MandrillAdapter implements EmailProviderInterface
      * @param string $template
      * @param array $sendTo
      * @return array | false
-     * @throws Mandrill_Error
+     * @throws \Exception
      */
     public function sendEmail($subject, $template, $sendTo)
     {
@@ -45,7 +51,8 @@ class MandrillAdapter implements EmailProviderInterface
             );
 
             return $mandrill->messages->send($message, self::ASYNC_FALSE, self::DEFAULT_IP_POOL);
-        } catch(Mandrill_Error $e) {
+        } catch(\Exception $e) {
+            $this->monologLogger->addDebug($e->getMessage());
             return false;
         }
     }
@@ -58,11 +65,11 @@ class MandrillAdapter implements EmailProviderInterface
      */
     public function getMessageInfo($messageId)
     {
-        try
-        {
+        try {
             $mandrill = new Mandrill($this->settings['key']);
             return $mandrill->messages->info($messageId);
-        } catch(Mandrill_Error $e) {
+        } catch(\Exception $e) {
+            $this->monologLogger->addDebug($e->getMessage());
             return false;
         }
     }

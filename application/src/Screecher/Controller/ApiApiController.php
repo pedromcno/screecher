@@ -3,10 +3,10 @@
 namespace Screecher\Controller;
 
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
-use Screecher\Entity\Api;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Screecher\Traits\ResponseErrorFormatTrait;
 
 /**
  * Class ApiApiController

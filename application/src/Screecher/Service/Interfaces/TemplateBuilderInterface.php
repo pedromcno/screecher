@@ -1,6 +1,6 @@
 <?php
-namespace Screecher\Service\Interfaces;
 
+namespace Screecher\Service\Interfaces;
 
 /**
  * Interface TemplateBuilderInterface

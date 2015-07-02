@@ -2,7 +2,6 @@
 namespace Screecher\Controller;
 
 use Silex\Application;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class ScreecherController
@@ -11,17 +10,19 @@ use Symfony\Component\HttpFoundation\Request;
 class ScreecherController
 {
     /**
-     * @param Request $request
      * @param Application $app
      * @return mixed
      */
-    public function runAction(Request $request, Application $app)
+    public function runAction(Application $app)
     {
         $errors = $app['parser.api_log']->parse();
+
         if ($errors) {
-            $response = $app['processor.errors']->processErrors($errors);
+            $responseData = $app['processor.errors']->processErrors($errors);
+        } else {
+            $responseData = ['errors' => []];
         }
 
-        return $app['twig']->render('screecherReportPage.html.twig', $response);
+        return $app['twig']->render('screecherReportPage.html.twig', $responseData);
     }
 }

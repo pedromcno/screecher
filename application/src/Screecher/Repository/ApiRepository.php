@@ -11,7 +11,7 @@ use Screecher\Entity\Api;
 class ApiRepository
 {
     /**
-     * @var \Doctrine\DBAL\Connection
+     * @var Connection
      */
     protected $db;
 
@@ -28,7 +28,7 @@ class ApiRepository
      *
      * @param integer $id
      *
-     * @return \Screecher\Entity\Api|false An entity object if found, false otherwise.
+     * @return Api|false An entity object if found, false otherwise.
      */
     public function find($id)
     {
@@ -86,7 +86,7 @@ class ApiRepository
      * @param array $apiData
      *   The array of db data.
      *
-     * @return \Screecher\Entity\Api
+     * @return Api
      */
     protected function buildApi($apiData)
     {

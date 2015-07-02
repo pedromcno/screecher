@@ -61,13 +61,10 @@ class ApiLogParser implements LogParserInterface
         $errorsMap = [];
 
         foreach ($csv as $line) {
-            if ($line[self::API_LOG_STATUS_INDEX] == self::API_LOG_ERROR)
-            {
+            if ($line[self::API_LOG_STATUS_INDEX] == self::API_LOG_ERROR) {
                 $errorsMap[$line[self::API_LOG_API_INDEX]][] = $line[self::API_LOG_MESSAGE_INDEX];
             }
         }
-
-        unset($csv);
 
         return $errorsMap;
     }

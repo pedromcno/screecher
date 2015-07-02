@@ -25,7 +25,7 @@ class ApiApiControllerTest extends WebTestCase
     public function createApplication()
     {
         $app_env = 'test';
-        $app = require __DIR__ . '/../../../../public/index.php';
+        $app = require __DIR__ . '/../../../../src/bootstrap.php';
         return $app;
     }
 

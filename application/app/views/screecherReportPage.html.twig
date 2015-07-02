@@ -2,17 +2,27 @@
 
 {% block content %}
     <h2>Screecher Report</h2>
-    {% for api, error in errors %}
+    {% if errors %}
+        {% for api, error in errors %}
             For <b>{{ api }}</b> {{ error|length }} errors found. <br />
-    {% endfor %}
+        {% endfor %}
 
-    <p>Email report statuses</p>
+        <p>Email report statuses</p>
         {% for api, responseData in emailProviderResponse %}
-        <b>{{ api }}</b>
-        {% for maintainerReport in responseData %}
-        <ul>
-            <li>{{ maintainerReport.email }} | status: {{ maintainerReport.status }} | _id: {{ maintainerReport._id }}</li>
-        </ul>
+        <p>
+            <b>{{ api }}</b><br />
+            {% if responseData %}
+                {% for maintainerReport in responseData %}
+                    <ul>
+                        <li>{{ maintainerReport.email }} | status: {{ maintainerReport.status }} | _id: {{ maintainerReport._id }}</li>
+                    </ul>
+                {% endfor %}
+            {% else %}
+                Something was wrong while sending report. Please check error log.
+            {% endif %}
+        </p>
         {% endfor %}
-        {% endfor %}
+    {% else %}
+        We have no found any errors.
+    {% endif %}
 {% endblock %}

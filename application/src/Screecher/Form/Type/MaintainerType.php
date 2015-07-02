@@ -18,6 +18,10 @@ class MaintainerType extends AbstractType
     }
 
 
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -35,19 +39,27 @@ class MaintainerType extends AbstractType
             ));
     }
 
+    /**
+     * @return array
+     */
     private function formatApiChoiceData()
     {
+        $formattedData = [];
+
         if (!empty($this->apiCollection)) {
-            $formattedData = [];
 
             foreach ($this->apiCollection as $apiObject) {
                 $formattedData[$apiObject->getId()] = $apiObject->getName();
             }
 
-            return $formattedData;
         }
+
+        return $formattedData;
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'maintainer';

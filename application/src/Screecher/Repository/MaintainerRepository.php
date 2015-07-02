@@ -6,12 +6,12 @@ use Doctrine\DBAL\Connection;
 use Screecher\Entity\Maintainer;
 
 /**
- * Api repository
+ * Maintainer repository
  */
 class MaintainerRepository
 {
     /**
-     * @var \Doctrine\DBAL\Connection
+     * @var Connection
      */
     protected $db;
 
@@ -41,7 +41,7 @@ class MaintainerRepository
      *
      * @param integer $id
      *
-     * @return \Screecher\Entity\Maintainer[] Collection.
+     * @return Maintainer[] Collection.
      */
     public function findAllByApi($id)
     {
@@ -62,7 +62,7 @@ class MaintainerRepository
      * @param array $maintainerData
      *   The array of db data.
      *
-     * @return \Screecher\Entity\Maintainer
+     * @return Maintainer
      */
     protected function buildMaintainer($maintainerData)
     {
