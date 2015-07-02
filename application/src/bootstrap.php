@@ -22,7 +22,6 @@ $app->register(new Silex\Provider\FormServiceProvider());
 $app->register(new Silex\Provider\SessionServiceProvider());
 $app->register(new Silex\Provider\ValidatorServiceProvider());
 $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
-
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.options' => array(
         'cache' => isset($app['twig.options.cache']) ? $app['twig.options.cache'] : false,
@@ -31,6 +30,11 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.form.templates' => array('form_div_layout.html.twig', 'common/form_div_layout.html.twig'),
     'twig.path' => array(__DIR__ . '/../app/views')
 ));
+
+$app->register(new Silex\Provider\TranslationServiceProvider(), array(
+    'translator.messages' => array(),
+));
+
 
 // Register repositories.
 $app['repository.api'] = $app->share(function ($app) {

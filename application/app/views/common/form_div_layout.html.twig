@@ -114,7 +114,7 @@
     {% set label = name|humanize %}
 {% endif %}
 
-        {% if multiple is defined and multiple %}
+{% if multiple is defined and multiple %}
     {% set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' checkbox')|trim}) %}
 {% elseif multiple is defined and not multiple %}
     {% set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' radio')|trim}) %}
