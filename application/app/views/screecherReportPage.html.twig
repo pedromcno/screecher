@@ -1,0 +1,28 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    <h2>Screecher Report</h2>
+    {% if errors %}
+        {% for api, error in errors %}
+            For <b>{{ api }}</b> {{ error|length }} errors found. <br />
+        {% endfor %}
+
+        <p>Email report statuses</p>
+        {% for api, responseData in emailProviderResponse %}
+        <p>
+            <b>{{ api }}</b><br />
+            {% if responseData %}
+                {% for maintainerReport in responseData %}
+                    <ul>
+                        <li>{{ maintainerReport.email }} | status: {{ maintainerReport.status }} | _id: {{ maintainerReport._id }}</li>
+                    </ul>
+                {% endfor %}
+            {% else %}
+                Something was wrong while sending report. Please check error log.
+            {% endif %}
+        </p>
+        {% endfor %}
+    {% else %}
+        We have no found any errors.
+    {% endif %}
+{% endblock %}

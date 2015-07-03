@@ -1,0 +1,12 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    <h2>Screecher dashboard</h2>
+    <a href="{{ path('run_screecher') }}">Run Screecher!</a><br />
+    <a href="{{ path('add_maintainer') }}">Add maintainer</a><br />
+
+    <p>List of Api (Click to get a list of all maintainers of a given API)</p>
+    {% for api in apis %}
+        <a href="{{ path('api_show', {'apiId': api.id}) }}">{{ api.name }}</a><br />
+    {% endfor %}
+{% endblock %}
